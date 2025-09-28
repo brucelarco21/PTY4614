@@ -1,34 +1,33 @@
-// filepath: src/app/guards/auth.guard.ts
-import { CanActivateFn, Router } from '@angular/router';
-import { inject } from '@angular/core';
+import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authRoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const router = inject(Router);
+  const platformId = inject(PLATFORM_ID);
 
-  // Recuperamos rol como string directo desde localStorage
-  const rol = localStorage.getItem('rol'); 
+  // Solo en navegador
+  if (!isPlatformBrowser(platformId)) return false;
 
-  if (!rol) {
-    // No está logeado
+  const user = localStorage.getItem('user');
+  const rol = localStorage.getItem('rol');
+
+  // Si no hay sesión → login
+  if (!user) {
     router.navigate(['/login']);
     return false;
   }
 
-  // Si la ruta tiene roles esperados en la data
-  const expectedRoles = route.data?.['roles'] as string[] | undefined;
-
-  if (expectedRoles && !expectedRoles.includes(rol)) {
-    // Tiene rol pero no autorizado → redirigimos según su rol
-    if (rol === 'vecino') {
-      router.navigate(['/home']); 
-    } else if (rol === 'admin') {
-      router.navigate(['/admin']); 
-    } else {
-      router.navigate(['/login']);
-    }
+  // Si la ruta tiene rol definido
+  const expectedRole = route.data?.['role'] as string | undefined;
+  if (expectedRole && rol !== expectedRole) {
+    // Redirigir según rol existente
+    if (rol === 'admin') router.navigate(['/admin']);
+    else if (rol === 'vecino') router.navigate(['/noticias']);
+    else router.navigate(['/login']);
     return false;
   }
 
-  // Si pasa validaciones → acceso permitido
+  // Usuario logeado y autorizado
   return true;
 };

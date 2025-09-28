@@ -6,22 +6,22 @@ import { VecinoComponent } from './admin/vecinos/vecinos';
 import { AdminPanelComponent } from './admin/panel/panel';
 import { ProyectosComponent } from './paginas/proyectos/proyectos';
 import { CertificadosComponent } from './paginas/certificados/certificados';
-
-import { authGuard } from './guards/guards';
+import { authRoleGuard } from './guards/guards';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
-  // rutas accesibles con cualquier login
-  { path: 'noticias', component: NoticiasComponent, canActivate: [authGuard] },
-  { path: 'eventos', component: EventosComponent, canActivate: [authGuard] },
-  { path: 'proyectos', component: ProyectosComponent, canActivate: [authGuard] },
-  { path: 'certificados', component: CertificadosComponent, canActivate: [authGuard] },
+  // rutas accesibles a cualquier usuario logeado
+  { path: 'noticias', component: NoticiasComponent, canActivate: [authRoleGuard] },
+  { path: 'eventos', component: EventosComponent, canActivate: [authRoleGuard] },
+  { path: 'proyectos', component: ProyectosComponent, canActivate: [authRoleGuard] },
+  { path: 'certificados', component: CertificadosComponent, canActivate: [authRoleGuard] },
 
-  // rutas exclusivas para roles
-  { path: 'vecino', component: VecinoComponent, canActivate: [authGuard], data: { role: 'vecino' } },
-  { path: 'admin', component: AdminPanelComponent, canActivate: [authGuard], data: { role: 'admin' } },
+  // rutas exclusivas por rol
+  { path: 'vecino', component: VecinoComponent, canActivate: [authRoleGuard], data: { role: 'vecino' } },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [authRoleGuard], data: { role: 'admin' } },
 
-  { path: '', redirectTo: 'noticias', pathMatch: 'full' },
+  // ruta por defecto
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
