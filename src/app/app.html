@@ -8,6 +8,9 @@
     <a routerLink="/proyectos" routerLinkActive="active">Proyectos</a>
     <a routerLink="/certificados" routerLinkActive="active">Certificados</a>
 
+    <!-- Nuevo botón Reservas -->
+    <a routerLink="/reservas" routerLinkActive="active">Reservas</a>
+
     <!-- Solo admin ve esta opción -->
     <a *ngIf="rol === 'admin'" routerLink="/admin" routerLinkActive="active">Admin</a>
 

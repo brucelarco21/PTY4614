@@ -6,6 +6,8 @@ import { VecinoComponent } from './admin/vecinos/vecinos';
 import { AdminPanelComponent } from './admin/panel/panel';
 import { ProyectosComponent } from './paginas/proyectos/proyectos';
 import { CertificadosComponent } from './paginas/certificados/certificados';
+import { ReservasComponent } from './paginas/reservas/reservas';
+
 import { authRoleGuard } from './guards/guards';
 
 export const routes: Routes = [
@@ -16,6 +18,8 @@ export const routes: Routes = [
   { path: 'eventos', component: EventosComponent, canActivate: [authRoleGuard] },
   { path: 'proyectos', component: ProyectosComponent, canActivate: [authRoleGuard] },
   { path: 'certificados', component: CertificadosComponent, canActivate: [authRoleGuard] },
+  { path: 'reservas', component: ReservasComponent, canActivate: [authRoleGuard], data: { role: 'vecino' } },
+
 
   // rutas exclusivas por rol
   { path: 'vecino', component: VecinoComponent, canActivate: [authRoleGuard], data: { role: 'vecino' } },
