@@ -1,0 +1,6 @@
+[submodule "proyecto/barriolink-backend"]
+	path = proyecto/barriolink-backend
+	url = https://github.com/DalizC/barriolink-backend
+[submodule "proyecto/barriolink-frontend"]
+	path = proyecto/barriolink-frontend
+	url = https://github.com/DalizC/barriolink-frontend
